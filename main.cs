@@ -82,36 +82,41 @@ namespace Civciv
                 "*To exit, please press 'q'."
                 );
 
-                string statement = "";
+                string? statement = "";
 
-                // while (true)
-                // {
+                while (true)
+                {
+                    statement = Console.ReadLine();
+                    if (statement == "q") // want to leave statement
+                    {
+                        break;
+                    }
 
-                //     if (statement = Console.ReadLine == "q")
-                //     {
-                //         break;
-                //     }
+                    else if (statement == "1") //signIn statement
+                    {
 
-                //     else if (statement = Console.ReadLine == "1")
-                //     {
+                    }
 
-                //     }
-
-                //     else if (statement = Console.ReadLine == "2")
-                //     {
-                //         Console.WriteLine("Enter your name: ");
-                //         name = Console.ReadLine();
-
-
-                //         Console.WriteLine("Enter your age: ");
-                //         age = Convert.ToInt32(Console.ReadLine());
-
-                //         Console.WriteLine("Enter your Identity Number: ");
-                //         identityNumber = Console.ReadLine();
+                    else if (statement == "2") //signUp statement
+                    {
+                        Person newUser = new Person();
+                        Console.WriteLine("Enter your name: ");
+                        newUser.Name = Console.ReadLine();
 
 
-                //     }
-                // }
+                        Console.WriteLine("Enter your age: ");
+                        newUser.Age = Convert.ToInt32(Console.ReadLine());
+
+                        Console.WriteLine("Enter your Identity Number: ");
+                        newUser.IdentityNumber = Console.ReadLine();
+
+                        Console.WriteLine("Signing is successful! Name:" + newUser.Name + " , Age: " + newUser.Age + " , IdentityNumber: " + newUser.IdentityNumber);
+                    }
+                    else //Wrong typing statement
+                    {
+
+                    }
+                }
             }
             catch (Exception ex)
             {

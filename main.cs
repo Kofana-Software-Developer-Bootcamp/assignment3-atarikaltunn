@@ -7,13 +7,13 @@ namespace Civciv
     {
         class Car //car class to car saling
         {
-            private string
+            private string 
                 brand = "",
                 model = "";
-            private int
+            private int 
                 price = 0,
-                year = 0,
-                kilometers = 0,
+                year = 0, 
+                kilometers = 0, 
                 damageAmount = 0;
             private Person
                 owner;
@@ -31,8 +31,8 @@ namespace Civciv
             }
             public string Model
             {
-                get { return model; }
-                set { model = value; }
+                get { return model; } 
+                set { model = value; } 
             }
             public int Price
             {
@@ -61,14 +61,14 @@ namespace Civciv
         {
             private int
                 age = 0,
-                money = 0;
-            private string
+                money = 0; 
+            private string 
                 name = "",
                 username = "",
                 identityNumber = "",
-                phoneNum = "",
+                phoneNum = "", 
                 password = "";
-            private Car
+            private Car 
                 carArray = new Car() { };
 
             // public functions to gets/sets person's informations
@@ -120,24 +120,24 @@ namespace Civciv
         {
             try
             {
-                int
-                    personID = 0,
+                int 
+                    personID = 0, 
                     carID = 0,
                     id = 0;
 
-                string?
-                    statement,
+                string? 
+                    statement, 
                     choice = "";
 
-                Person[]
+                Person[] 
                     users = new Person[5];
 
-                Car[]
+                Car[] 
                     onSaleCars = new Car[5];
 
                 while (true)
                 {
-                Welcome:
+                    Welcome:
                     Console.WriteLine(
                         "Welcome to car sale!\n" +
                         "------------------------------------------\n" +
@@ -159,7 +159,7 @@ namespace Civciv
 
                     else if (statement == "1") //signIn statement
                     {
-                    Login:
+                        Login:
                         Console.WriteLine("Enter your username or name: (to cancel please press q)");
                         var name = Console.ReadLine();
 
@@ -175,24 +175,24 @@ namespace Civciv
                         {
                             if ((users[j].Name == name || users[j].Username == name) && users[j].Password == password) //signin is successfull
                             {
-                            Session:
+                                Session:
                                 Console.WriteLine(
-                                    "Welcome!" +
-                                    "What do you want to do:\n" +
-                                    "1- Buy a car:\n" +
+                                    "Welcome!"               +
+                                    "What do you want to do:\n"+
+                                    "1- Buy a car:\n"          +
                                     "2- Sell a car:\n" +
                                     "3- Log out:"
                                     );
                                 choice = Console.ReadLine();
 
-                                if (choice == "1") // wants to buy
+                                if(choice == "1") // wants to buy
                                 {
-                                    if (carID == 0)
+                                    if(carID == 0)
                                     {
                                         Console.WriteLine("There is no car on sale!");
                                         goto Session;
                                     }
-                                    else
+                                    else 
                                     {
 
                                         Console.WriteLine(
@@ -219,27 +219,30 @@ namespace Civciv
                                             );
                                         id = Convert.ToInt32(Console.ReadLine());
 
-                                        if ((users[j].Username != onSaleCars[id].Owner.Name) && (users[j].Money > onSaleCars[id].Price))
+                                        if ((users[j].Username != onSaleCars[id].Owner.Name) &&(users[j].Money > onSaleCars[id].Price)) // purchase successfull
                                         {
-                                            onSaleCars[id].Owner = users[j];
+
                                             users[j].Money = users[j].Money - onSaleCars[id].Price;
+                                            onSaleCars[id].Owner.Money = onSaleCars[id].Owner.Money + onSaleCars[id].Price;
+                                            onSaleCars[id].Owner = users[j];
+
 
                                             Console.WriteLine("Car purchase successful!\n\n");
 
                                             goto Session;
                                         }
-                                        else if ((users[j].Username == onSaleCars[id].Owner.Name))
+                                        else if ((users[j].Username == onSaleCars[id].Owner.Name))  //trying to buy his/her own car
                                         {
                                             Console.WriteLine("You can not buy your own car! \n");
                                             goto Session;
 
                                         }
-                                        else if (!(users[j].Money > onSaleCars[id].Price))
+                                        else if (!(users[j].Money > onSaleCars[id].Price)) // Insufficient money
                                         {
-                                            Console.WriteLine("Insufficient balance! \n");
+                                            Console.WriteLine("Insufficient money! \n");
                                             goto Session;
                                         }
-                                        else
+                                        else // something happened
                                         {
                                             Console.WriteLine("Something went wrong :( \n");
                                         }
@@ -354,7 +357,7 @@ namespace Civciv
                     }
                     else if (statement == "3") //info 
                     {
-                        if (users[0].Name == null)
+                        if(users[0].Name == null)
                         {
                             break;
                         }

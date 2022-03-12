@@ -8,24 +8,36 @@ namespace Civciv
         class Car //car class to car saling
         {
             private string 
-                brand = "";
+                brand = "",
+                model = "";
             private int 
+                price = 0,
                 year = 0, 
                 kilometers = 0, 
                 damageAmount = 0;
-            //private Person 
-            //    owner = new Person();
+            private Person
+                owner;
 
             // public functions to gets/sets car's informations
-            //public Person Owner
-            //{ 
-            //    get { return owner; } 
-            //    set { owner = value; }
-            //}
+            public Person Owner
+            {
+                get;
+                set;
+            }
             public string Brand
             {
                 get { return brand; }
                 set { brand = value; }
+            }
+            public string Model
+            {
+                get { return model; } 
+                set { model = value; } 
+            }
+            public int Price
+            {
+                get { return price; }
+                set { price = value; }
             }
             public int Year
             {
@@ -48,7 +60,8 @@ namespace Civciv
         class Person //person class to user seller/buyer
         {
             private int
-                age = 0;
+                age = 0,
+                money = 0; 
             private string 
                 name = "",
                 username = "",
@@ -64,6 +77,11 @@ namespace Civciv
             {
                 get { return age; }
                 set { age = value; }
+            }
+            public int Money
+            {
+                get { return money; }
+                set { money = value; }
             }
             public string Name
             {
@@ -104,7 +122,8 @@ namespace Civciv
             {
                 int 
                     personID = 0, 
-                    carID = 0;
+                    carID = 0,
+                    id = 0;
 
                 string? 
                     statement, 
@@ -118,6 +137,7 @@ namespace Civciv
 
                 while (true)
                 {
+                    Welcome:
                     Console.WriteLine(
                         "Welcome to car sale!\n" +
                         "------------------------------------------\n" +
@@ -139,8 +159,14 @@ namespace Civciv
 
                     else if (statement == "1") //signIn statement
                     {
-                        Console.WriteLine("Enter your username or name: ");
+                        Login:
+                        Console.WriteLine("Enter your username or name: (to cancel please press q)");
                         var name = Console.ReadLine();
+
+                        if (name == "q")
+                        {
+                            goto Welcome;
+                        }
 
                         Console.WriteLine("Enter your password: ");
                         var password = Console.ReadLine();
@@ -154,7 +180,8 @@ namespace Civciv
                                     "Welcome!"               +
                                     "What do you want to do:\n"+
                                     "1- Buy a car:\n"          +
-                                    "2- Sell a car:"
+                                    "2- Sell a car:\n" +
+                                    "3- Log out:"
                                     );
                                 choice = Console.ReadLine();
 
@@ -168,18 +195,29 @@ namespace Civciv
                                     else 
                                     {
 
-                                        Console.WriteLine("Vehicles on sale:");
+                                        Console.WriteLine(
+                                            "Vehicles on sale:\n" +
+                                            "----------------------------------------------------"
+                                            );
 
                                         for (int k = 0; k < carID; k++)
                                         {
                                             Console.WriteLine(
                                         "\nCar ID: " + k +
+                                        "\nOwner: " + onSaleCars[k].Owner.Name +
+                                        "\nPrice: " + onSaleCars[k].Price + "TL" +
                                         "\nBrand: " + onSaleCars[k].Brand +
+                                        "\nModel: " + onSaleCars[k].Model +
                                         "\nYear: " + onSaleCars[k].Year +
                                         "\nKilometers: " + onSaleCars[k].Kilometers +
-                                        "\nDamage Amount: " + onSaleCars[k].DamageAmount + "\n\n"
+                                        "\nDamage Amount: " + onSaleCars[k].DamageAmount
                                         );
                                         }
+                                        Console.WriteLine("----------------------------------------------------\n");
+
+
+
+
                                         goto Session;
                                     }
                                 }
@@ -191,6 +229,12 @@ namespace Civciv
                                     Console.WriteLine("Brand:");
                                     newCar.Brand = Console.ReadLine();
 
+                                    Console.WriteLine("Model:");
+                                    newCar.Model = Console.ReadLine();
+
+                                    Console.WriteLine("Price: (Turkish Lira)");
+                                    newCar.Price = Convert.ToInt32(Console.ReadLine());
+
                                     Console.WriteLine("Year:");
                                     newCar.Year = Convert.ToInt32(Console.ReadLine());
 
@@ -200,20 +244,28 @@ namespace Civciv
                                     Console.WriteLine("DamageAmount:");
                                     newCar.DamageAmount = Convert.ToInt32(Console.ReadLine());
 
-                                    //newCar.Owner = users[j];
+                                    newCar.Owner = users[j];
 
                                     onSaleCars[carID] = newCar;
                                     Console.WriteLine(
-                                        "Car register is successful!" +
+                                        "***********************************************" +
+                                        "\nCar register is successful!" +
                                         "\nCar ID: " + carID +
-                                        //"\nOwner: " + newCar.Owner +
+                                        "\nOwner: " + newCar.Owner.Name +
+                                        "\nPrice " + newCar.Price +
                                         "\nBrand: " + newCar.Brand +
+                                        "\nModel " + newCar.Model +
                                         "\nYear: " + newCar.Year +
                                         "\nKilometers: " + newCar.Kilometers +
-                                        "\nDamage Amount: " + newCar.DamageAmount + "\n\n"
+                                        "\nDamage Amount: " + newCar.DamageAmount + "\n\n" +
+                                        "***********************************************\n\n"
                                         );
                                     carID++;
                                     goto Session;
+                                }
+                                else if (choice == "3") //logout
+                                {
+                                    goto Welcome;
                                 }
                                 else
                                 {
@@ -225,6 +277,7 @@ namespace Civciv
                             }
                         }
                         Console.WriteLine("\nUsername or password is wrong, please try again!\n\n");
+                        goto Login;
                     }
 
                     else if (statement == "2") //signUp statement
@@ -254,7 +307,9 @@ namespace Civciv
                                 "\nUsername: " + newUser.Username +
                                 "\nName: " + newUser.Name +
                                 "\nAge: " + newUser.Age +
-                                "\nIdentityNumber: " + newUser.IdentityNumber);
+                                "\nIdentityNumber: " + newUser.IdentityNumber +
+                                "\nAge: " + newUser.Money
+                                );
 
                             personID++;
 
@@ -268,6 +323,11 @@ namespace Civciv
                     }
                     else if (statement == "3") //info 
                     {
+                        if(users[0].Name == null)
+                        {
+                            break;
+                        }
+                        Console.WriteLine("**********************************************\n");
                         for (int j = 0; j < personID; j++)
                         {
                             if (users[j].Name == null)
@@ -275,10 +335,9 @@ namespace Civciv
                                 break;
                             }
                             Console.WriteLine("\nUser-" + j + ": " + users[j].Name);
-
-                            Console.WriteLine("\n ***Directing to main page.***\n\n");
-
                         }
+                        Console.WriteLine("**********************************************\n");
+                        Console.WriteLine("\n ***Directing to main page.***\n\n");
                     }
                     else //Wrong typed statement
                     {
